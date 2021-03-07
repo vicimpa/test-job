@@ -1,16 +1,16 @@
 version: "3"
 services:
-  # app:
-  #   image: node:14.16.0
-  #   working_dir: /app
-  #   volumes:
-  #     - ./:/app
-  #     - ./data/node:/app/node_modules
-  #   ports:
-  #     - 8080:80
-  #   command: make start
-  #   depends_on:
-  #     - db
+  app:
+    image: node:14.16.0
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - ./data/node:/app/node_modules
+    ports:
+      - 8080:80
+    command: make start
+    depends_on:
+      - db
 
   db:
     image: postgres    
