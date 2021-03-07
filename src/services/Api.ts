@@ -25,6 +25,8 @@ export class ApiService implements BaseService {
 
     this.app.use(this.router)
     this.server = this.app.listen(httpPort, httpHost)
+    this.server.on('listening', () => 
+      console.log(`Server listen on: ${httpHost}:${httpPort}`))
   }
 
   async stop() {
