@@ -50,45 +50,46 @@ export class LoaderService implements BaseService {
     return Promise.all(
       items.map(
         async item => {
-          return Promise.resolve(() => {
-            const object = haveItems.find(e => 
-              e && e.getDataValue('id') == +item.uid)
-  
-            if(object) {
-              let modify = false
-  
-              if(object.getDataValue('summary') != item.summary)
-                object.set('summary', item.summary) && (modify = true)
-  
-              if(+object.getDataValue('start') != +item.start)
-                object.set('start', item.start) && (modify = true)
-  
-              if(+object.getDataValue('end') != +item.end)
-                object.set('end', item.end) && (modify = true)
-  
-              if(+object.getDataValue('created') != +item.created)
-                object.set('created', item.created) && (modify = true)
-  
-              if(+object.getDataValue('lastmodified') != +item.lastmodified)
-                object.set('lastmodified', item.lastmodified) && (modify = true)
-            
-              if(!modify)
-                return object
-  
-              return object.save()
-            }
-  
-            return EventModel.create({
-              id: +item.uid,
-              start: item.start,
-              end: item.end,
-              created: item.created,
-              lastmodified: item.lastmodified,
-              summary: item.summary
+          const object = haveItems.find(e => 
+            e && e.getDataValue('id') == +item.uid)
+
+          if(object) {
+            let modify = false
+
+            if(object.getDataValue('summary') != item.summary)
+              object.set('summary', item.summary) && (modify = true)
+
+            if(+object.getDataValue('start') != +item.start)
+              object.set('start', item.start) && (modify = true)
+
+            if(+object.getDataValue('end') != +item.end)
+              object.set('end', item.end) && (modify = true)
+
+            if(+object.getDataValue('created') != +item.created)
+              object.set('created', item.created) && (modify = true)
+
+            if(+object.getDataValue('lastmodified') != +item.lastmodified)
+              object.set('lastmodified', item.lastmodified) && (modify = true)
+          
+            if(!modify)
+              return object
+
+            return object.save().then((e) => {
+              console.log(`Updated: ${item.uid}`)
+              return e
             })
-          })
-          .finally(() => {
-            console.log(`Loaded or updated: ${item.uid}`)
+          }
+
+          return EventModel.create({
+            id: +item.uid,
+            start: item.start,
+            end: item.end,
+            created: item.created,
+            lastmodified: item.lastmodified,
+            summary: item.summary
+          }).then((e) => {
+            console.log(`Loaded: ${item.uid}`)
+            return e
           })
         }
       )
