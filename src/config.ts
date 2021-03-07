@@ -1,5 +1,5 @@
 /** @description Хост для HTTP сервера */
-export const httpHost = '127.0.0.1'
+export const httpHost = 'app'
 /** @description Порт для HTTP сервера */
 export const httpPort = 8080
 
@@ -9,7 +9,7 @@ export const calendarUrl = ''
 export const reloadTimeout = 900000 // 15 минут
 
 /** @description Хост базы данных Postgres */
-export const pgHost = 'localhost'
+export const pgHost = 'db'
 /** @description Порт базы данных Postgres */
 export const pgPort = 5432
 /** @description Пользователь базы данных Postgres */
